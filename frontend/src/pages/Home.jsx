@@ -1,36 +1,33 @@
-import Counter from "@components/Counter";
-import logo from "@assets/logo.svg";
+import { useState, useEffect } from "react";
+import CoffeeCard from "@components/CoffeeCard";
 
 export default function Home() {
+  const [coffee, setCoffee] = useState({});
+  const [count, setCount] = useState(0);
+  const [notes, setNotes] = useState("");
+
+  useEffect(() => {
+    fetch("https://random-data-api.com/api/coffee/random_coffee")
+      .then((res) => res.json())
+      .then((data) => {
+        setCoffee(data);
+
+        setNotes(
+          data.notes
+            .split(", ")
+            .map((note) => note.toUpperCase())
+            .join(" • ")
+        );
+      });
+  }, [count]);
+
   return (
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>Hello Vite + React !</p>
+    <>
+      <CoffeeCard coffee={coffee} notes={notes} />
 
-      <Counter />
-
-      <p>
-        Edit <code>App.jsx</code> and save to test HMR updates.
-      </p>
-      <p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        {" | "}
-        <a
-          className="App-link"
-          href="https://vitejs.dev/guide/features.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Vite Docs
-        </a>
-      </p>
-    </header>
+      <button type="button" onClick={() => setCount(count + 1)}>
+        Trouve moi un café ({count})
+      </button>
+    </>
   );
 }

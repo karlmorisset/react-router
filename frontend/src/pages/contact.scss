@@ -1,0 +1,23 @@
+#contact {
+  text-align: center;
+
+  input,
+  textarea {
+    min-height: 40px;
+    border-radius: 5px;
+    margin: 0;
+    border: 2px solid var(--clr-brown);
+  }
+
+  .fields {
+    display: flex;
+    gap: 5px;
+    margin-top: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 100px;
+    margin-top: 10px;
+  }
+}
